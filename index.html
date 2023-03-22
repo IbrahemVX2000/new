@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>ChatGPT Web Interface</title>
+  </head>
+  <body>
+    <h1>ChatGPT Web Interface</h1>
+    <form id="question-form">
+      <label for="question-input">Ask your question:</label><br>
+      <input type="text" id="question-input" name="question"><br><br>
+      <input type="submit" value="Submit">
+    </form>
+    <div id="answer-container"></div>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+      const form = document.getElementById("question-form");
+      const answerContainer = document.getElementById("answer-container");
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const questionInput = document.getElementById("question-input");
+        const question = questionInput.value;
+
+        answerContainer.innerHTML = "Loading...";
+
+        const response = await axios.post("/answer", { question });
+
+        answerContainer.innerHTML = response.data.answer;
+      });
+    </script>
+  </body>
+</html>
